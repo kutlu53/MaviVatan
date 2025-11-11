@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mavi Vatan Bilgi Oyunu</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .quiz-container {
+      background: #e1f5fe;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+    .question {
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #01579b;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      background: #0288d1;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .options button:hover {
+      background: #01579b;
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #004d40;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: #0077c2;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Mavi Vatan</a>
+    <a href="denizler.html">Denizlerimiz</a>
+    <a href="harita-kullanim.html">Harita Kullanımı</a>
+    <a href="harita.html">Harita</a>
+    <a href="oyun.html" class="active">Oyun</a>
+  </nav>
+
+  <main>
+    <div class="quiz-container">
+      <h1>🎮 Mavi Vatan Bilgi Oyunu</h1>
+      <p>Her seferinde farklı sorularla deniz bilincini test et!</p>
+
+      <div id="quiz"></div>
+      <div id="result" class="result"></div>
+
+      <a href="harita.html" class="back-btn">⬅️ Haritaya Dön</a>
+    </div>
+  </main>
+
+  <script>
+    const allQuestions = [
+      { q: "Karasuları kaç deniz miline kadar uzanır?", o: ["6 mil", "12 mil", "24 mil"], a: 1 },
+      { q: "Türkiye Akdeniz’de MEB sınırını hangi ülkeyle belirlemiştir?", o: ["Libya", "Yunanistan", "İtalya"], a: 0 },
+      { q: "Montrö Sözleşmesi hangi denizle ilgilidir?", o: ["Karadeniz", "Ege Denizi", "Akdeniz"], a: 0 },
+      { q: "Kıta sahanlığı hangi kaynakları kapsar?", o: ["Deniz yüzeyi", "Deniz tabanı ve altı", "Karadaki nehirler"], a: 1 },
+      { q: "Mavi Vatan kavramı neyi ifade eder?", o: ["Karasal sınırlar", "Denizlerdeki hak ve yetkiler", "Balıkçılık alanları"], a: 1 },
+      { q: "Türkiye’nin iç denizi hangisidir?", o: ["Marmara Denizi", "Ege Denizi", "Akdeniz"], a: 0 },
+      { q: "Ege Denizi’nde karasuları Türkiye için kaç mildir?", o: ["6 mil", "12 mil", "9 mil"], a: 0 },
+      { q: "Sakarya Gaz Sahası hangi denizde yer alır?", o: ["Ege", "Karadeniz", "Akdeniz"], a: 1 },
+      { q: "Deniz canlılarını korumak neden önemlidir?", o: ["Turizm için", "Ekosistem dengesi için", "Yemek çeşitliliği için"], a: 1 },
+      { q: "TPAO’nun enerji aramaları hangi denizde sürmektedir?", o: ["Akdeniz", "Marmara", "Karadeniz"], a: 0 }
+    ];
+
+    // Soruları rastgele karıştır
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    // Tüm sorulardan 5 tanesini seç
+    const questions = shuffle(allQuestions).slice(0, 5);
+
+    let current = 0;
+    let score = 0;
+
+    const quizDiv = document.getElementById("quiz");
+    const resultDiv = document.getElementById("result");
+
+    function showQuestion() {
+      if (current >= questions.length) {
+        showResult();
+        return;
+      }
+      const q = questions[current];
+      quizDiv.innerHTML = `
+        <div class="question">${current + 1}. ${q.q}</div>
+        <div class="options">
+          ${q.o.map((opt, i) => `<button onclick="checkAnswer(${i})">${opt}</button>`).join("")}
+        </div>
+      `;
+    }
+
+    function checkAnswer(selected) {
+      if (selected === questions[current].a) {
+        score += 20;
+      }
+      current++;
+      showQuestion();
+    }
+
+    function showResult() {
+      quizDiv.innerHTML = "";
+      let title = "🌊 Deniz Öğrencisi";
+      if (score === 100) title = "🦅 Deniz Kartalı!";
+      else if (score >= 60) title = "⚓ Deniz Kaşifi!";
+      resultDiv.innerHTML = `
+        <p>Tebrikler! Toplam puanın: <strong>${score}</strong></p>
+        <p>Unvanın: <strong>${title}</strong></p>
+        <button onclick="restartGame()" class="back-btn">🔁 Yeniden Oyna</button>
+      `;
+    }
+
+    function restartGame() {
+      score = 0;
+      current = 0;
+      const newSet = shuffle(allQuestions).slice(0, 5);
+      questions.splice(0, questions.length, ...newSet);
+      resultDiv.innerHTML = "";
+      showQuestion();
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
