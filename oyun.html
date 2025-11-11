@@ -15,13 +15,11 @@
       margin: 2rem auto;
       text-align: center;
     }
-
     .question {
       font-weight: bold;
       margin-bottom: 1rem;
       color: #01579b;
     }
-
     .options button {
       display: block;
       width: 100%;
@@ -34,18 +32,15 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-
     .options button:hover {
       background: #01579b;
     }
-
     .result {
       margin-top: 1.5rem;
       font-size: 1.2rem;
       font-weight: bold;
       color: #004d40;
     }
-
     .back-btn {
       display: inline-block;
       margin-top: 2rem;
@@ -54,6 +49,39 @@
       color: white;
       text-decoration: none;
       border-radius: 8px;
+    }
+    /* Maskot stilleri */
+    .mascot-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      align-items: flex-end;
+      z-index: 999;
+      animation: fadeIn 1.5s ease;
+    }
+    .mascot-img {
+      width: 120px;
+      height: auto;
+      margin-right: 15px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .mascot-speech {
+      background: #ffffffee;
+      border-radius: 16px;
+      padding: 15px 20px;
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 0.95rem;
+      color: #003366;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      max-width: 280px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .mascot-speech:hover { transform: scale(1.03); }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
@@ -70,13 +98,20 @@
     <div class="quiz-container">
       <h1>🎮 Mavi Vatan Bilgi Oyunu</h1>
       <p>Her seferinde farklı sorularla deniz bilincini test et!</p>
-
       <div id="quiz"></div>
       <div id="result" class="result"></div>
-
       <a href="harita.html" class="back-btn">⬅️ Haritaya Dön</a>
     </div>
   </main>
+
+  <!-- Denizci Kara maskotu -->
+  <div class="mascot-container" id="mascot">
+    <img src="images/maskot1.png" alt="Denizci Kara" class="mascot-img" id="mascot-img">
+    <div class="mascot-speech" id="speech-bubble">
+      <strong>Hoş geldin Genç Kaşif! ⚓</strong><br>
+      Bugün Türkiye’nin dört denizinde mavi yolculuğa çıkıyorsun.
+    </div>
+  </div>
 
   <script>
     const allQuestions = [
@@ -92,40 +127,23 @@
       { q: "TPAO’nun enerji aramaları hangi denizde sürmektedir?", o: ["Akdeniz", "Marmara", "Karadeniz"], a: 0 }
     ];
 
-    // Soruları rastgele karıştır
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
-
-    // Tüm sorulardan 5 tanesini seç
+    function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
     const questions = shuffle(allQuestions).slice(0, 5);
-
-    let current = 0;
-    let score = 0;
-
+    let current = 0; let score = 0;
     const quizDiv = document.getElementById("quiz");
     const resultDiv = document.getElementById("result");
 
     function showQuestion() {
-      if (current >= questions.length) {
-        showResult();
-        return;
-      }
+      if (current >= questions.length) { showResult(); return; }
       const q = questions[current];
       quizDiv.innerHTML = `
         <div class="question">${current + 1}. ${q.q}</div>
-        <div class="options">
-          ${q.o.map((opt, i) => `<button onclick="checkAnswer(${i})">${opt}</button>`).join("")}
-        </div>
-      `;
+        <div class="options">${q.o.map((opt, i) => `<button onclick="checkAnswer(${i})">${opt}</button>`).join("")}</div>`;
     }
 
     function checkAnswer(selected) {
-      if (selected === questions[current].a) {
-        score += 20;
-      }
-      current++;
-      showQuestion();
+      if (selected === questions[current].a) score += 20;
+      current++; showQuestion();
     }
 
     function showResult() {
@@ -133,23 +151,39 @@
       let title = "🌊 Deniz Öğrencisi";
       if (score === 100) title = "🦅 Deniz Kartalı!";
       else if (score >= 60) title = "⚓ Deniz Kaşifi!";
-      resultDiv.innerHTML = `
-        <p>Tebrikler! Toplam puanın: <strong>${score}</strong></p>
-        <p>Unvanın: <strong>${title}</strong></p>
-        <button onclick="restartGame()" class="back-btn">🔁 Yeniden Oyna</button>
-      `;
+      resultDiv.innerHTML = `<p>Tebrikler! Toplam puanın: <strong>${score}</strong></p><p>Unvanın: <strong>${title}</strong></p><button onclick="restartGame()" class="back-btn">🔁 Yeniden Oyna</button>`;
     }
 
     function restartGame() {
-      score = 0;
-      current = 0;
+      score = 0; current = 0;
       const newSet = shuffle(allQuestions).slice(0, 5);
       questions.splice(0, questions.length, ...newSet);
-      resultDiv.innerHTML = "";
-      showQuestion();
+      resultDiv.innerHTML = ""; showQuestion();
     }
 
     showQuestion();
+
+    // Maskot konuşma sistemi
+    const messages = [
+      { text: "<strong>Hoş geldin Genç Kaşif! ⚓</strong><br>Bugün Türkiye’nin dört denizinde mavi yolculuğa çıkıyorsun.", img: "images/maskot1.png" },
+      { text: "Karadeniz, Marmara, Ege ve Akdeniz seni bekliyor! 🌊<br>Her biri benzersiz güzelliklere sahip.", img: "images/maskot2.png" },
+      { text: "Unutma! Denizlerimizi korumak hepimizin görevi. 💙🇹🇷", img: "images/maskot3.png" },
+      { text: "Hazırsan, macera başlasın! 🚢 Tıkla ve keşfe devam et!", img: "images/maskot2.png" }
+    ];
+
+    let index = 0;
+    const speechBubble = document.getElementById('speech-bubble');
+    const mascotImg = document.getElementById('mascot-img');
+
+    speechBubble.addEventListener('click', () => {
+      index = (index + 1) % messages.length;
+      mascotImg.style.opacity = 0;
+      setTimeout(() => {
+        mascotImg.src = messages[index].img;
+        mascotImg.style.opacity = 1;
+      }, 300);
+      speechBubble.innerHTML = messages[index].text;
+    });
   </script>
 </body>
 </html>
