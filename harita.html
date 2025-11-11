@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dijital Mavi Vatan Haritası</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Harita sayfasına özel birkaç küçük ek stil */
+    .map-container {
+      width: 100%;
+      height: 600px;
+      border: 3px solid #005b96;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      margin-top: 1rem;
+    }
+
+    .map-note {
+      background: #e1f5fe;
+      border-left: 5px solid #0288d1;
+      padding: 1rem;
+      margin-top: 2rem;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .map-container {
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Mavi Vatan</a>
+    <a href="denizler.html">Denizlerimiz</a>
+    <a href="harita-kullanim.html">Harita Kullanımı</a>
+    <a href="harita.html" class="active">Harita</a>
+  </nav>
+
+  <main>
+    <h1>🗺️ Dijital Mavi Vatan Haritası</h1>
+    <p>Türkiye’nin deniz yetki alanlarını, enerji bölgelerini, limanlarını ve koruma alanlarını keşfet!</p>
+
+    <div class="map-container">
+      <!-- 🔹 Harita embed kodu entegre edildi -->
+      <iframe 
+        src="https://www.google.com/maps/d/u/0/embed?mid=18wEDmeI0EaN9eVmyfA4PRtOLjhP7oPc&ehbc=2E312F&noprof=1"
+        width="100%" height="100%" allowfullscreen loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="map-note">
+      💡 <strong>İpucu:</strong> Sol taraftaki menüden katmanları açıp kapatabilir, 
+      simgelere tıklayarak detaylı bilgi ve görselleri inceleyebilirsin.
+    </div>
+
+    <div class="button-container">
+      <a href="harita-kullanim.html" class="next-button">⬅️ Harita Kullanımı Sayfasına Dön</a>
+    </div>
+  </main>
+
+  <footer>© 2025 Mavi Vatan Eğitsel Projesi </footer>
+</body>
+</html>

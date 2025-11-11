@@ -1,0 +1,99 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to bottom, #eaf6ff, #f9fcff);
+  color: #03396c;
+  margin: 0;
+}
+
+nav {
+  background-color: #005b96;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 600;
+}
+
+nav a.active {
+  text-decoration: underline;
+}
+
+main {
+  width: 90%;
+  max-width: 900px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+  color: #005b96;
+}
+
+.info-card {
+  background: #e1f5fe;
+  border-left: 5px solid #0288d1;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
+.sea {
+  margin-bottom: 2rem;
+  background: #f1f9ff;
+  border-left: 4px solid #0288d1;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+ul {
+  line-height: 1.6;
+}
+
+.next-button {
+  background-color: #0077c2;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.next-button:hover {
+  background-color: #005b96;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+footer {
+  background: #011f4b;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.game-hint {
+  background: #e3f2fd;
+  border: 1px dashed #0288d1;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  nav {
+    display: flex;
+    flex-direction: column;
+  }
+}
