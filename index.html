@@ -5,8 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mavi Vatan Nedir?</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70vh; /* Ekranın %70’i */
+  background: url('images/kapak.png') no-repeat center 80%;
+  background-size: contain; /* Görselin tamamı görünür */
+  background-color: #7ec8f5; /* Geri plan rengi, gökyüzüyle uyumlu */
+  z-index: 9999;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+    #intro-screen.hidden {
+      opacity: 0;
+      transform: translateY(-50px);
+      pointer-events: none;
+    }
+    #intro-hint {
+      position: absolute;
+      bottom: 40px;
+      color: white;
+      background: rgba(0,0,0,0.4);
+      padding: 8px 20px;
+      border-radius: 12px;
+      font-family: sans-serif;
+      font-size: 0.9rem;
+    }
+    body.loaded main,
+    body.loaded nav,
+    body.loaded footer {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+    main, nav, footer {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  </style>
 </head>
 <body>
+  <div id="intro-screen">
+    <div id="intro-hint">Devam etmek için ekrana tıklayın</div>
+  </div>
+
   <nav>
     <a href="index.html" class="active">Mavi Vatan</a>
     <a href="denizler.html">Denizlerimiz</a>
@@ -37,5 +87,16 @@
   </main>
 
   <footer>© 2025 Mavi Vatan Eğitsel Projesi | Hazırlayan: Mehmet Kutlu</footer>
+
+  <script>
+    const introScreen = document.getElementById("intro-screen");
+    introScreen.addEventListener("click", () => {
+      introScreen.classList.add("hidden");
+      setTimeout(() => {
+        introScreen.style.display = "none";
+        document.body.classList.add("loaded");
+      }, 1500);
+    });
+  </script>
 </body>
 </html>
